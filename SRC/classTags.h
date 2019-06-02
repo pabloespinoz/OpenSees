@@ -212,6 +212,7 @@
 #define MAT_TAG_ConcreteECThermal		95   //L.Jiang [SIF]
 #define MAT_TAG_BoucWenOriginal                 96
 #define MAT_TAG_DamperMaterial                  97
+#define MAT_TAG_SPSW02			                98	//SAJalali
 
 #define MAT_TAG_PySimple1                    205
 #define MAT_TAG_TzSimple1                    206
@@ -315,7 +316,8 @@
 #define SECTION_INTEGRATION_TAG_RCT 3
 #define SECTION_INTEGRATION_TAG_RCTUM 4
 #define SECTION_INTEGRATION_TAG_RCCIRCULAR 5
-#define SECTION_INTEGRATION_TAG_Tube 6
+#define SECTION_INTEGRATION_TAG_RCTUNNEL 6
+#define SECTION_INTEGRATION_TAG_Tube 7
 
 #define ND_TAG_WrapperNDMaterial		9
 #define ND_TAG_ElasticIsotropic			10
@@ -511,6 +513,7 @@
 #define LOAD_TAG_SelfWeight              10 // C.McGann, U.W.
 #define LOAD_TAG_Beam2dThermalAction      11
 #define LOAD_TAG_Beam2dPartialUniformLoad 12
+#define LOAD_TAG_Beam3dPartialUniformLoad 121
 #define LOAD_TAG_Beam3dThermalAction      13 // L.Jiang [ SIF ]
 #define LOAD_TAG_ShellThermalAction       14 // L.Jiang [ SIF ]
 #define LOAD_TAG_NodalThermalAction       15 //L.Jiang [ SIF ]
@@ -587,6 +590,7 @@
 #define ELE_TAG_ConstantPressureVolumeQuad 60
 #define ELE_TAG_NineNodeMixedQuad          61
 #define ELE_TAG_DispBeamColumn2d        62
+#define ELE_TAG_DispBeamColumnNL2d        621
 #define ELE_TAG_TimoshenkoBeamColumn2d  63
 #define ELE_TAG_DispBeamColumn3d        64
 #define ELE_TAG_DispBeamColumnWarping3d        641
@@ -1030,6 +1034,7 @@
 #define RANDOM_VARIABLE_uniform				17
 #define RANDOM_VARIABLE_weibull				18
 #define RANDOM_VARIABLE_userdefined             19
+#define RANDOM_VARIABLE_python             20
 
 #define RANDOM_VARIABLE_POSITIONER        1
 #define PARAMETER_POSITIONER              2

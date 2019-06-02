@@ -35,6 +35,9 @@
 
 #include <OPS_Globals.h>
 
+//by SAJalali
+int OPS_recorderValue(ClientData clientData, Tcl_Interp *interp, int argc, TCL_Char **argv);
+
 int OpenSeesAppInit(Tcl_Interp *interp);
 
  int
@@ -204,6 +207,9 @@ getParamTags(ClientData clientData, Tcl_Interp *interp, int argc, TCL_Char **arg
 
 int 
 getParamValue(ClientData clientData, Tcl_Interp *interp, int argc, TCL_Char **argv);
+
+int 
+sdfResponse(ClientData clientData, Tcl_Interp *interp, int argc, TCL_Char **argv);
 
 // AddingSensitivity:BEGIN /////////////////////////////////////////////////
 
