@@ -213,6 +213,9 @@
 #define MAT_TAG_BoucWenOriginal                 96
 #define MAT_TAG_DamperMaterial                  97
 #define MAT_TAG_SPSW02			                98	//SAJalali
+#define MAT_TAG_Steel02Fatigue					99 //nassermarafi
+#define MAT_TAG_Concrete02IS					100 //nassermarafi
+#define MAT_TAG_ConfinedConcrete01              99
 
 #define MAT_TAG_PySimple1                    205
 #define MAT_TAG_TzSimple1                    206
@@ -309,7 +312,7 @@
 #define SEC_TAG_LayeredShellFiberSectionThermal 35     //L.Jiang[SIF]
 #define SEC_TAG_BiaxialHysteretic 36
 
-#define SEC_TAG_McftSection2dfiber 7601
+#define SEC_TAG_MCFTFiberSection2d 7601
 
 #define SECTION_INTEGRATION_TAG_WideFlange 1
 #define SECTION_INTEGRATION_TAG_RC 2
@@ -379,6 +382,7 @@
 #define ND_TAG_FAPrestressedConcretePlaneStress  109
 #define ND_TAG_FAFourSteelPCPlaneStress  110
 #define ND_TAG_RAFourSteelPCPlaneStress  111
+#define ND_TAG_PressureDependMultiYield03		112
 
 #define ND_TAG_J2PlaneStrain                  3005
 #define ND_TAG_J2PlaneStress                  3006
@@ -397,6 +401,7 @@
 #define ND_TAG_PlaneStrainMaterial          2003
 #define ND_TAG_BeamFiberMaterial		2002
 #define ND_TAG_BeamFiberMaterial2d		2004
+#define ND_TAG_BeamFiberMaterial2dPS		2005
 #define ND_TAG_CompressibleFluid		3001
 #define ND_TAG_GeneralizedPlasticity 3002
 #define ND_TAG_J2Plasticity02  3003
