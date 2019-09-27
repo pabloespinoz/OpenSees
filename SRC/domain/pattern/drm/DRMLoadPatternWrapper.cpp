@@ -21,18 +21,18 @@ DRMLoadPatternWrapper::DRMLoadPatternWrapper(int ttag, double cfact, char** on_f
 					     int stepstocache)
   :LoadPattern(ttag, PATTERN_TAG_DRMLoadPattern)
 {
-  this->infiles = on_files;
-  this->fileData_size = fileDatasize;
-  this->file_data = filedata;
-  this->factor = cfact;
-  this->files = sfiles;
-  this->dt = ddt;
-  this->num_steps = numsteps;  
-  this->nd1 = nd_1;
-  this->nd2 = nd_2;
-  this->drm_box_crds = drmboxcrds;
-  this->eleD = ele_D;
-  this->steps_to_cache = stepstocache;
+  this->infiles = on_files;             
+  this->fileData_size = fileDatasize;   
+  this->file_data = filedata;           
+  this->factor = cfact;                 
+  this->files = sfiles;                 
+  this->dt = ddt;                       
+  this->num_steps = numsteps;           
+  this->nd1 = nd_1;                     
+  this->nd2 = nd_2;                     
+  this->drm_box_crds = drmboxcrds;      
+  this->eleD = ele_D;                   
+  this->steps_to_cache = stepstocache;  
   
   this->myPattern = 0;
   this->initialized = false;

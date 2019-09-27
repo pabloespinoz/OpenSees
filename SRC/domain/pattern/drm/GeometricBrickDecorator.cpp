@@ -179,7 +179,7 @@ GeometricBrickDecorator::getFace(int which, ID &face, ID& faceID)
     faceID(2) = 6;
     faceID(3) = 7;
     break;
-  case 3:
+  case 3:  //[20190905 huangjf] currently the model (use the example script) is built such that the nodes 4,1,5,8 have x coord that are less than the remaining 4 nodes, thus here return the nodes 4,1,5,8. Case 1,2,4,5 follow the same logic.
     face(0) = extNodes(3);
     face(1) = extNodes(0);
     face(2) = extNodes(4);
@@ -355,7 +355,7 @@ GeometricBrickDecorator::isFaceinVertPlane(int which, double xy, double zmin, do
     opserr << " severe error NULL node ptr GeomDec L.294 \n" ;
   d3 = (ndptr->getCrds())(crd-1);
 
-  return (( d0== xy) && (d1 == xy) && ( d2 == xy) && (d3 == xy) &&
+  return (( d0== xy) && (d1 == xy) && ( d2 == xy) && (d3 == xy) &&  //?huangjf 20190905: appropriate to compare double precision value
 	  (maxE <= zmax) &&
 	  (minE >= zmin) 
 	  );

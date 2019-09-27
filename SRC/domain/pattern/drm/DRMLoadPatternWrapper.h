@@ -59,17 +59,17 @@ class DRMLoadPatternWrapper : public LoadPattern
     
  private:
 
-    char** infiles;
-    int files;
-    double dt;
-    int num_steps;
-    int* file_data;
-    int fileData_size;
-    int nd1;
-    int nd2;
-    double* drm_box_crds;
-    double* eleD;
-    int steps_to_cache;
+    char** infiles;        // 6 input file names for 5 faces (2 for face 5)
+    int files;             // number of input files, 6 (2 for face 5)
+    double dt;             // time step
+    int num_steps;         // number of time steps
+    int *file_data;        // array that contain the number of grids(elements) along edges of each face
+    int fileData_size;     // length of array that contain the number of grids(elements) along edges of each face
+    int nd1;               // number of grid points on face 5a
+    int nd2;               // number of grid points on face 5b
+    double *drm_box_crds;  // min and max of x, y, z of the DRM subdomain
+    double *eleD;          // mesh size of element along the x, y, z global axis
+    int steps_to_cache;    // number of cached steps
 
     DRMLoadPattern* myPattern;
     

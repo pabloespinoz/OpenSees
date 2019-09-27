@@ -77,12 +77,14 @@ class PlaneDRMInputHandler : public DRMInputHandler {
   std::ifstream ifile5a;
   std::ifstream ifile5b;
   
-
+  //[20190905 huangjf] array that contains the velocities in 3 dirs of each node for one brick element, thus total 24 values
+  //[20190905 huangjf] four velocities for 4 sequential time steps: t-1, t, t+1, t+2
   static Vector Vtm2;
   static Vector Vtm1;
   static Vector Vtp1;
   static Vector Vtp2;
 
+  //[20190905 huangjf] velocities for four nodes of the same side of the brick element, used for interpolation
   static Vector Vtm2_n1;
   static Vector Vtm2_n2;
   static Vector Vtm2_n3;
