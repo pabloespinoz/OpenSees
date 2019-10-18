@@ -283,65 +283,65 @@ void H5DRM::intitialize()
         //opserr << "dz =  " << drmbox_zmax - drmbox_zmin << " \n";
     }
 
-    if (myrank == 0)
-    {
-        char viewstations[100];
-        sprintf(viewstations, "stations.msh");
-        FILE * fptr = fopen(viewstations, "w");
-        fprintf(fptr, "$MeshFormat\n");
-        fprintf(fptr, "2.2 0 8\n");
-        fprintf(fptr, "$EndMeshFormat\n");
-        fprintf(fptr, "$Nodes\n");
-        fprintf(fptr, "%d\n", NDRM_points);
-        for (int i = 0; i < NDRM_points; ++i)
-        {
-            fprintf(fptr, "%d %f %f %f\n", i + 1, xyz(i, 0), xyz(i, 1), xyz(i, 2));
-        }
-        fprintf(fptr, "$EndNodes\n");
-        fprintf(fptr, "$Elements\n");
-        fprintf(fptr, "%d\n", NDRM_points);
-        for (int i = 0; i < NDRM_points; ++i)
-        {
-            fprintf(fptr, "%d 15 2 1 1 %d\n", i + 1, i + 1);
-        }
-        fprintf(fptr, "$EndElements\n");
-        fclose(fptr);
-    }
+    //if (myrank == 0)
+    //{
+    //    char viewstations[100];
+    //    sprintf(viewstations, "stations.msh");
+    //    FILE * fptr = fopen(viewstations, "w");
+    //    fprintf(fptr, "$MeshFormat\n");
+    //    fprintf(fptr, "2.2 0 8\n");
+    //    fprintf(fptr, "$EndMeshFormat\n");
+    //    fprintf(fptr, "$Nodes\n");
+    //    fprintf(fptr, "%d\n", NDRM_points);
+    //    for (int i = 0; i < NDRM_points; ++i)
+    //    {
+    //        fprintf(fptr, "%d %f %f %f\n", i + 1, xyz(i, 0), xyz(i, 1), xyz(i, 2));
+    //    }
+    //    fprintf(fptr, "$EndNodes\n");
+    //    fprintf(fptr, "$Elements\n");
+    //    fprintf(fptr, "%d\n", NDRM_points);
+    //    for (int i = 0; i < NDRM_points; ++i)
+    //    {
+    //        fprintf(fptr, "%d 15 2 1 1 %d\n", i + 1, i + 1);
+    //    }
+    //    fprintf(fptr, "$EndElements\n");
+    //    fclose(fptr);
+    //}
 
-    char viewdrm[100];
-    sprintf(viewdrm, "drm.%d.msh", myrank);
-    FILE * fptrdrm = fopen(viewdrm, "w");
+    //char viewdrm[100];
+    //sprintf(viewdrm, "drm.%d.msh", myrank);
+    //FILE * fptrdrm = fopen(viewdrm, "w");
 
-    fprintf(fptrdrm, "$MeshFormat\n");
-    fprintf(fptrdrm, "2.2 0 8\n");
-    fprintf(fptrdrm, "$EndMeshFormat\n");
-    fprintf(fptrdrm, "$Nodes\n");
-    fprintf(fptrdrm, "%d\n", theDomain->getNumNodes());
+    //fprintf(fptrdrm, "$MeshFormat\n");
+    //fprintf(fptrdrm, "2.2 0 8\n");
+    //fprintf(fptrdrm, "$EndMeshFormat\n");
+    //fprintf(fptrdrm, "$Nodes\n");
+    //fprintf(fptrdrm, "%d\n", theDomain->getNumNodes());
 
-    NodeIter& node_iter = theDomain->getNodes();
-    Node* node_ptr = 0;
-    int drmtag = NDRM_points;
-    while ((node_ptr = node_iter()) != 0)
-    {
-        const Vector& xyz_node = node_ptr->getCrds();
-        fprintf(fptrdrm, "%d %f %f %f\n", ++drmtag, xyz_node(0), xyz_node(1), xyz_node(2));
-    }
-    fprintf(fptrdrm, "$EndNodes\n");
-
-
-    fprintf(fptrdrm, "$Elements\n");
-    fprintf(fptrdrm, "%d\n", theDomain->getNumNodes());
-    int ndrmpoint = drmtag - 1;
-    drmtag = n_nodes_found + 1;
-    for (int i = 0; i < ndrmpoint; ++i)
-    {
-        fprintf(fptrdrm, "%d 15 2 1 %d %d\n", drmtag, 5 + myrank, drmtag);
-        ++drmtag;
-    }
-    fprintf(fptrdrm, "$EndElements\n");
+    //NodeIter& node_iter = theDomain->getNodes();
+    //Node* node_ptr = 0;
+    //int drmtag = NDRM_points;
+    //while ((node_ptr = node_iter()) != 0)
+    //{
+    //    const Vector& xyz_node = node_ptr->getCrds();
+    //    fprintf(fptrdrm, "%d %f %f %f\n", ++drmtag, xyz_node(0), xyz_node(1), xyz_node(2));
+    //}
+    //fprintf(fptrdrm, "$EndNodes\n");
 
 
-    fclose(fptrdrm);
+    //fprintf(fptrdrm, "$Elements\n");
+    //fprintf(fptrdrm, "%d\n", theDomain->getNumNodes());
+    //int ndrmpoint = drmtag - 1;
+    //drmtag = n_nodes_found + 1;
+    //for (int i = 0; i < ndrmpoint; ++i)
+    //{
+    //    fprintf(fptrdrm, "%d 15 2 1 %d %d\n", drmtag, 5 + myrank, drmtag);
+    //    ++drmtag;
+    //}
+    //fprintf(fptrdrm, "$EndElements\n");
+
+
+    //fclose(fptrdrm);
 
     H5DRMout << "Found and connected " << n_nodes_found << " nodes (d_err = " << d_err << ")\n";
     DRMForces.resize(3 * n_nodes_found);
@@ -352,27 +352,27 @@ void H5DRM::intitialize()
     DRMDisplacements.Zero();
     DRMAccelerations.Zero();
 
-    char mshfilename[100];
-    sprintf(mshfilename, "drmnodes.%d.msh", myrank);
-    FILE * fptr = fopen(mshfilename, "w");
-    fprintf(fptr, "$MeshFormat\n");
-    fprintf(fptr, "2.2 0 8\n");
-    fprintf(fptr, "$EndMeshFormat\n");
-    fprintf(fptr, "$NodeData\n");
-    fprintf(fptr, "    1\n");
-    fprintf(fptr, "\"DRM Nodes\"\n");
-    fprintf(fptr, "1\n");
-    fprintf(fptr, "0.0000000000e+00\n");
-    fprintf(fptr, "3\n");
-    fprintf(fptr, "0\n");
-    fprintf(fptr, "1\n");
-    fprintf(fptr, "%d\n", Nodes.Size());
-    for (int i = 0; i < Nodes.Size(); ++i)
-    {
-        fprintf(fptr, "%d %d\n", Nodes(i), 1 * IsBoundary(i) + 2 * (1 - IsBoundary(i)));
-    }
-    fprintf(fptr, "$EndNodeData\n");
-    fclose(fptr);
+    //char mshfilename[100];
+    //sprintf(mshfilename, "drmnodes.%d.msh", myrank);
+    //FILE * fptr = fopen(mshfilename, "w");
+    //fprintf(fptr, "$MeshFormat\n");
+    //fprintf(fptr, "2.2 0 8\n");
+    //fprintf(fptr, "$EndMeshFormat\n");
+    //fprintf(fptr, "$NodeData\n");
+    //fprintf(fptr, "    1\n");
+    //fprintf(fptr, "\"DRM Nodes\"\n");
+    //fprintf(fptr, "1\n");
+    //fprintf(fptr, "0.0000000000e+00\n");
+    //fprintf(fptr, "3\n");
+    //fprintf(fptr, "0\n");
+    //fprintf(fptr, "1\n");
+    //fprintf(fptr, "%d\n", Nodes.Size());
+    //for (int i = 0; i < Nodes.Size(); ++i)
+    //{
+    //    fprintf(fptr, "%d %d\n", Nodes(i), 1 * IsBoundary(i) + 2 * (1 - IsBoundary(i)));
+    //}
+    //fprintf(fptr, "$EndNodeData\n");
+    //fclose(fptr);
 
 
 
@@ -403,47 +403,47 @@ void H5DRM::intitialize()
 
 
     // char mshfilename[100];
-    sprintf(mshfilename, "drmelements.%d.msh", myrank);
-    fptr = fopen(mshfilename, "w");
-    fprintf(fptr, "$MeshFormat\n");
-    fprintf(fptr, "2.2 0 8\n");
-    fprintf(fptr, "$EndMeshFormat\n");
-    fprintf(fptr, "$ElementData\n");
-    fprintf(fptr, "    1\n");
-    fprintf(fptr, "\"DRM Elements\"\n");
-    fprintf(fptr, "1\n");
-    fprintf(fptr, "0.0000000000e+00\n");
-    fprintf(fptr, "3\n");
-    fprintf(fptr, "0\n");
-    fprintf(fptr, "1\n");
-    fprintf(fptr, "%d\n", Elements.Size());
-    for (int i = 0; i < Elements.Size(); ++i)
-    {
-        fprintf(fptr, "%d %d\n", Elements(i), 1);
-    }
-    fprintf(fptr, "$EndElementData\n");
-    fclose(fptr);
+    //sprintf(mshfilename, "drmelements.%d.msh", myrank);
+    //fptr = fopen(mshfilename, "w");
+    //fprintf(fptr, "$MeshFormat\n");
+    //fprintf(fptr, "2.2 0 8\n");
+    //fprintf(fptr, "$EndMeshFormat\n");
+    //fprintf(fptr, "$ElementData\n");
+    //fprintf(fptr, "    1\n");
+    //fprintf(fptr, "\"DRM Elements\"\n");
+    //fprintf(fptr, "1\n");
+    //fprintf(fptr, "0.0000000000e+00\n");
+    //fprintf(fptr, "3\n");
+    //fprintf(fptr, "0\n");
+    //fprintf(fptr, "1\n");
+    //fprintf(fptr, "%d\n", Elements.Size());
+    //for (int i = 0; i < Elements.Size(); ++i)
+    //{
+    //    fprintf(fptr, "%d %d\n", Elements(i), 1);
+    //}
+    //fprintf(fptr, "$EndElementData\n");
+    //fclose(fptr);
 
-    sprintf(mshfilename, "drmforces.%d.msh", myrank);
-    fptr = fopen(mshfilename, "w");
-    fprintf(fptr, "$MeshFormat\n");
-    fprintf(fptr, "2.2 0 8\n");
-    fprintf(fptr, "$EndMeshFormat\n");
-    fclose(fptr);
+    //sprintf(mshfilename, "drmforces.%d.msh", myrank);
+    //fptr = fopen(mshfilename, "w");
+    //fprintf(fptr, "$MeshFormat\n");
+    //fprintf(fptr, "2.2 0 8\n");
+    //fprintf(fptr, "$EndMeshFormat\n");
+    //fclose(fptr);
 
-    sprintf(mshfilename, "drmdisplacements.%d.msh", myrank);
-    fptr = fopen(mshfilename, "w");
-    fprintf(fptr, "$MeshFormat\n");
-    fprintf(fptr, "2.2 0 8\n");
-    fprintf(fptr, "$EndMeshFormat\n");
-    fclose(fptr);
+    //sprintf(mshfilename, "drmdisplacements.%d.msh", myrank);
+    //fptr = fopen(mshfilename, "w");
+    //fprintf(fptr, "$MeshFormat\n");
+    //fprintf(fptr, "2.2 0 8\n");
+    //fprintf(fptr, "$EndMeshFormat\n");
+    //fclose(fptr);
 
-    sprintf(mshfilename, "drmaccelerations.%d.msh", myrank);
-    fptr = fopen(mshfilename, "w");
-    fprintf(fptr, "$MeshFormat\n");
-    fprintf(fptr, "2.2 0 8\n");
-    fprintf(fptr, "$EndMeshFormat\n");
-    fclose(fptr);
+    //sprintf(mshfilename, "drmaccelerations.%d.msh", myrank);
+    //fptr = fopen(mshfilename, "w");
+    //fprintf(fptr, "$MeshFormat\n");
+    //fprintf(fptr, "2.2 0 8\n");
+    //fprintf(fptr, "$EndMeshFormat\n");
+    //fclose(fptr);
 
 
 
@@ -770,8 +770,13 @@ bool H5DRM::ComputeDRMMotions(double next_integration_time)
     bool have_displacement = id_displacement > 0;
     // bool have_velocity = id_velocity > 0;
     // bool have_acceleration = id_acceleration > 0;
+    //[20191017 huangjf]
+    bool have_acceleration = id_acceleration > 0;
 
-    if(have_displacement )//&& !have_acceleration)
+    //if(have_displacement )//&& !have_acceleration)
+    //    return drm_differentiate_displacements(next_integration_time);
+    //[20191017 huangjf]
+    if (have_displacement && !have_acceleration)
         return drm_differentiate_displacements(next_integration_time);
 
     //JAA Disable these modes for now
@@ -781,6 +786,9 @@ bool H5DRM::ComputeDRMMotions(double next_integration_time)
 
     // if(!have_displacement && !have_acceleration && have_velocity) 
     //     return drm_integrate_velocity(next_integration_time);
+    //[20191017 huangjf]
+     if(have_displacement && have_acceleration)
+         return drm_direct_read(next_integration_time);
 
     return false;
 }
