@@ -682,47 +682,48 @@ H5DRM::applyLoad(double time)
         FILE* fptr_accel = 0;
 
         static int step = 0;
-        char mshfilename[100];
+        //[20191018 huangjf] comment out
+        //char mshfilename[100];
 
-        // drmforces
-        sprintf(mshfilename, "drmforces.%d.msh", myrank);
-        fptr_forces = fopen(mshfilename, "a");
-        // drmdisplacements
-        sprintf(mshfilename, "drmdisplacements.%d.msh", myrank);
-        fptr_displ = fopen(mshfilename, "a");
-        // drmaccelerations
-        sprintf(mshfilename, "drmaccelerations.%d.msh", myrank);
-        fptr_accel = fopen(mshfilename, "a");
-        
-        fprintf(fptr_forces, "$NodeData\n");
-        fprintf(fptr_forces, "    1\n");
-        fprintf(fptr_forces, "\"DRM Forces\"\n");
-        fprintf(fptr_forces, "1\n");
-        fprintf(fptr_forces, "%f\n", time);
-        fprintf(fptr_forces, "3\n");
-        fprintf(fptr_forces, "%d\n", step);
-        fprintf(fptr_forces, "3\n");
-        fprintf(fptr_forces, "%d\n", Nodes.Size());
+        //// drmforces
+        //sprintf(mshfilename, "drmforces.%d.msh", myrank);
+        //fptr_forces = fopen(mshfilename, "a");
+        //// drmdisplacements
+        //sprintf(mshfilename, "drmdisplacements.%d.msh", myrank);
+        //fptr_displ = fopen(mshfilename, "a");
+        //// drmaccelerations
+        //sprintf(mshfilename, "drmaccelerations.%d.msh", myrank);
+        //fptr_accel = fopen(mshfilename, "a");
+        //
+        //fprintf(fptr_forces, "$NodeData\n");
+        //fprintf(fptr_forces, "    1\n");
+        //fprintf(fptr_forces, "\"DRM Forces\"\n");
+        //fprintf(fptr_forces, "1\n");
+        //fprintf(fptr_forces, "%f\n", time);
+        //fprintf(fptr_forces, "3\n");
+        //fprintf(fptr_forces, "%d\n", step);
+        //fprintf(fptr_forces, "3\n");
+        //fprintf(fptr_forces, "%d\n", Nodes.Size());
 
-        fprintf(fptr_displ, "$NodeData\n");
-        fprintf(fptr_displ, "    1\n");
-        fprintf(fptr_displ, "\"DRM Displacements\"\n");
-        fprintf(fptr_displ, "1\n");
-        fprintf(fptr_displ, "%f\n", time);
-        fprintf(fptr_displ, "3\n");
-        fprintf(fptr_displ, "%d\n", step);
-        fprintf(fptr_displ, "3\n");
-        fprintf(fptr_displ, "%d\n", Nodes.Size());
+        //fprintf(fptr_displ, "$NodeData\n");
+        //fprintf(fptr_displ, "    1\n");
+        //fprintf(fptr_displ, "\"DRM Displacements\"\n");
+        //fprintf(fptr_displ, "1\n");
+        //fprintf(fptr_displ, "%f\n", time);
+        //fprintf(fptr_displ, "3\n");
+        //fprintf(fptr_displ, "%d\n", step);
+        //fprintf(fptr_displ, "3\n");
+        //fprintf(fptr_displ, "%d\n", Nodes.Size());
 
-        fprintf(fptr_accel, "$NodeData\n");
-        fprintf(fptr_accel, "    1\n");
-        fprintf(fptr_accel, "\"DRM Acceleration\"\n");
-        fprintf(fptr_accel, "1\n");
-        fprintf(fptr_accel, "%f\n", time);
-        fprintf(fptr_accel, "3\n");
-        fprintf(fptr_accel, "%d\n", step);
-        fprintf(fptr_accel, "3\n");
-        fprintf(fptr_accel, "%d\n", Nodes.Size());
+        //fprintf(fptr_accel, "$NodeData\n");
+        //fprintf(fptr_accel, "    1\n");
+        //fprintf(fptr_accel, "\"DRM Acceleration\"\n");
+        //fprintf(fptr_accel, "1\n");
+        //fprintf(fptr_accel, "%f\n", time);
+        //fprintf(fptr_accel, "3\n");
+        //fprintf(fptr_accel, "%d\n", step);
+        //fprintf(fptr_accel, "3\n");
+        //fprintf(fptr_accel, "%d\n", Nodes.Size());
 
 
         ++step;
@@ -748,19 +749,21 @@ H5DRM::applyLoad(double time)
                 load(2) = DRMForces(3 * local_pos + 2);
             }
 
-            fprintf(fptr_forces, "%d %f %f %f\n", nodeTag, load(0), load(1), load(2));
-            fprintf(fptr_displ, "%d %f %f %f\n", nodeTag, DRMDisplacements(3 * local_pos + 0), DRMDisplacements(3 * local_pos + 1), DRMDisplacements(3 * local_pos + 2));
-            fprintf(fptr_accel, "%d %f %f %f\n", nodeTag, DRMAccelerations(3 * local_pos + 0), DRMAccelerations(3 * local_pos + 1), DRMAccelerations(3 * local_pos + 2));
+            //[20191018 huangjf] comment out
+            //fprintf(fptr_forces, "%d %f %f %f\n", nodeTag, load(0), load(1), load(2));
+            //fprintf(fptr_displ, "%d %f %f %f\n", nodeTag, DRMDisplacements(3 * local_pos + 0), DRMDisplacements(3 * local_pos + 1), DRMDisplacements(3 * local_pos + 2));
+            //fprintf(fptr_accel, "%d %f %f %f\n", nodeTag, DRMAccelerations(3 * local_pos + 0), DRMAccelerations(3 * local_pos + 1), DRMAccelerations(3 * local_pos + 2));
 
             //Add to current nodal unbalanced load
             theNode->addUnbalancedLoad(load);
         }
-        fprintf(fptr_forces, "$EndNodeData\n");
-        fclose(fptr_forces);
-        fprintf(fptr_displ, "$EndNodeData\n");
-        fclose(fptr_displ);
-        fprintf(fptr_accel, "$EndNodeData\n");
-        fclose(fptr_accel);
+        //[20191018 huangjf] comment out
+        //fprintf(fptr_forces, "$EndNodeData\n");
+        //fclose(fptr_forces);
+        //fprintf(fptr_displ, "$EndNodeData\n");
+        //fclose(fptr_displ);
+        //fprintf(fptr_accel, "$EndNodeData\n");
+        //fclose(fptr_accel);
     }
 }
 
@@ -928,10 +931,11 @@ bool H5DRM::drm_direct_read(double t)
             exit(-1);
         }
 
-        d1[2] = -d1[2];
-        d2[2] = -d2[2];
-        a1[2] = -a1[2];
-        a2[2] = -a2[2];
+        //[20191018 huangjf] comment out
+        //d1[2] = -d1[2];
+        //d2[2] = -d2[2];
+        //a1[2] = -a1[2];
+        //a2[2] = -a2[2];
 
         
         DRMDisplacements(3 * local_pos + 0) = d1[0]*(1-dtau) + d2[0]*(dtau);
