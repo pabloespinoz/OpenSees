@@ -229,7 +229,7 @@ void H5DRM::intitialize()
     ID internal;
     Matrix xyz;
     Vector drmbox_x0;
-    read_double_dataset_into_vector(id_drm_file, "DRM_Metadata/drmbox_x0", drmbox_x0);
+    //read_double_dataset_into_vector(id_drm_file, "DRM_Metadata/drmbox_x0", drmbox_x0);
     read_double_dataset_into_matrix(id_drm_file, "DRM_Data/xyz", xyz);
     read_int_dataset_into_id(id_drm_file, "DRM_Data/internal", internal);
     read_int_dataset_into_id(id_drm_file, "DRM_Data/data_location", station_id2data_pos);
@@ -248,17 +248,17 @@ void H5DRM::intitialize()
     // last_integration_time = tstart;
     last_integration_time = theDomain->getCurrentTime();
 
-    xyz *= crd_scale;
-    drmbox_x0 *= crd_scale;
-    drmbox_xmax *= crd_scale;
-    drmbox_xmin *= crd_scale;
-    drmbox_ymax *= crd_scale;
-    drmbox_ymin *= crd_scale;
-    drmbox_zmax *= crd_scale;
-    drmbox_zmin *= crd_scale;
+    //xyz *= crd_scale;
+    //drmbox_x0 *= crd_scale;
+    //drmbox_xmax *= crd_scale;
+    //drmbox_xmin *= crd_scale;
+    //drmbox_ymax *= crd_scale;
+    //drmbox_ymin *= crd_scale;
+    //drmbox_zmax *= crd_scale;
+    //drmbox_zmin *= crd_scale;
 
-    convert_h5drmcrd_to_ops_crd(drmbox_x0);
-    convert_h5drmcrd_to_ops_crd(xyz);
+    //convert_h5drmcrd_to_ops_crd(drmbox_x0);
+    //convert_h5drmcrd_to_ops_crd(xyz);
 
     int NDRM_points = xyz.noRows();
     double d_tol = 3.0;
@@ -271,7 +271,7 @@ void H5DRM::intitialize()
     if (myrank == 0)
     {
         H5DRMout << "Dataset has " << NDRM_points << " data-points\n";
-        opserr << "drmbox_x0   =  " << drmbox_x0 << " \n";
+        //opserr << "drmbox_x0   =  " << drmbox_x0 << " \n";
         //opserr << "drmbox_xmax =  " << drmbox_xmax << " \n";
         //opserr << "drmbox_xmin =  " << drmbox_xmin << " \n";
         //opserr << "drmbox_ymax =  " << drmbox_ymax << " \n";
@@ -1516,12 +1516,51 @@ H5DRM::ComputeDRMLoads(double t)
                     }
                 }
             }
+
+            ////[20191025 huangjf] output nodal displacement, acceleration and DRMForce of element 1001 for debugging
+            //if (eleTag == 1371)
+            //{
+            //    char debugfilename[100];
+            //    sprintf(debugfilename, "h5drmDebug.%d.txt", myrank);
+            //    FILE* fptr = fopen(debugfilename, "a+");
+
+            //    fprintf(fptr, "\n%f", t);
+            //    fprintf(fptr, "\n\tDRMDisp:");
+            //    for (int k = 0; k < NIE; ++k)
+            //    {
+            //        int nodeTag = elementNodes(k);
+            //        int local_pos = nodetag2local_pos[nodeTag];
+            //        fprintf(fptr, "  %.6f", DRMDisplacements[3 * local_pos]);
+            //        fprintf(fptr, "  %.6f", DRMDisplacements[3 * local_pos + 1]);
+            //        fprintf(fptr, "  %.6f", DRMDisplacements[3 * local_pos + 2]);
+            //    }
+
+            //    fprintf(fptr, "\n\tDRMAcce:");
+            //    for (int k = 0; k < NIE; ++k)
+            //    {
+            //        int nodeTag = elementNodes(k);
+            //        int local_pos = nodetag2local_pos[nodeTag];
+            //        fprintf(fptr, "  %.6f", DRMAccelerations[3 * local_pos]);
+            //        fprintf(fptr, "  %.6f", DRMAccelerations[3 * local_pos + 1]);
+            //        fprintf(fptr, "  %.6f", DRMAccelerations[3 * local_pos + 2]);
+            //    }
+
+            //    fprintf(fptr, "\n\tDRMForc:");
+            //    for (int k = 0; k < NIE; ++k)
+            //    {
+            //        int nodeTag = elementNodes(k);
+            //        int local_pos = nodetag2local_pos[nodeTag];
+            //        fprintf(fptr, "  %.6f", DRMForces[3 * local_pos]);
+            //        fprintf(fptr, "  %.6f", DRMForces[3 * local_pos + 1]);
+            //        fprintf(fptr, "  %.6f", DRMForces[3 * local_pos + 2]);
+            //    }
+
+            //    fclose(fptr);
+            //}
         }
     }
     if (myrank == 0)
         H5DRMout << "ComputeDRMLoads.... Done.\n";
-
-
 
     if (DEBUG_DRM_FORCES)
     {
@@ -1748,14 +1787,14 @@ void H5DRM::node_matching_BruteForce(double d_tol, const ID & internal, const Ma
         int ii_station_min = 0;
 
         if (DEBUG_NODE_MATCHING)
-            fprintf(fptrdrm, "%d %f %f %f\n", ++drmtag, node_xyz[0] + drmbox_x0[0], node_xyz[1] + drmbox_x0[1], node_xyz[2] + drmbox_x0[2]);
+            fprintf(fptrdrm, "%d %f %f %f\n", ++drmtag, node_xyz[0] /*+ drmbox_x0[0]*/, node_xyz[1] /*+ drmbox_x0[1]*/, node_xyz[2] /*+ drmbox_x0[2]*/);
         Vector station_xyz(3);
         for (int ii = 0; ii < xyz.noRows(); ++ii)
         {
             station_xyz(0) = xyz(ii, 0);
             station_xyz(1) = xyz(ii, 1);
             station_xyz(2) = xyz(ii, 2);
-            double d = (node_xyz + drmbox_x0 - station_xyz).Norm();
+            double d = (node_xyz /*+ drmbox_x0*/ - station_xyz).Norm();
             if (d < dmin)
             {
                 dmin = d;
@@ -1768,7 +1807,7 @@ void H5DRM::node_matching_BruteForce(double d_tol, const ID & internal, const Ma
             static Vector station_xyz(3);
             for (int dir = 0; dir < 3; ++dir)
                 station_xyz(dir) = xyz(station_id, dir);
-            double this_d_err = (station_xyz - node_xyz - drmbox_x0).Norm();
+            double this_d_err = (station_xyz - node_xyz /*- drmbox_x0*/).Norm();
             if (this_d_err > d_err)
                 d_err = this_d_err;
             nodetag2station_id.insert ( std::pair<int, int>(tag, station_id) );
@@ -1782,7 +1821,7 @@ void H5DRM::node_matching_BruteForce(double d_tol, const ID & internal, const Ma
         else
         {
             if (DEBUG_NODE_MATCHING)
-                fprintf(fptrdrm, "Node # %05d @ (%4.2f, %4.2f, %4.2f) rejected \n", tag, node_xyz(0) + drmbox_x0(0), node_xyz(1) + drmbox_x0(1), node_xyz(2) + drmbox_x0(2));
+                fprintf(fptrdrm, "Node # %05d @ (%4.2f, %4.2f, %4.2f) rejected \n", tag, node_xyz(0) /*+ drmbox_x0(0)*/, node_xyz(1) /*+ drmbox_x0(1)*/, node_xyz(2) /*+ drmbox_x0(2)*/);
         }
     }
     if (DEBUG_NODE_MATCHING)

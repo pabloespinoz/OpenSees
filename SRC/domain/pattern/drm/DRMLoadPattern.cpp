@@ -75,7 +75,7 @@ DRMLoadPattern::applyLoad(double time)
   
       myDecorator->setBrick(ele);
       this->myHandler->getMotions(ele, time, U, Ud, Udd);
-      myDecorator->applyDRMLoad(this->factor,load, U, Ud, Udd);
+      myDecorator->applyDRMLoad(this->factor,load, U, Ud, Udd, time);
     }
   }
   delete myDecorator;

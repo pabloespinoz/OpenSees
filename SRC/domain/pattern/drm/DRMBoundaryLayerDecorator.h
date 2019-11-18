@@ -53,7 +53,8 @@ class DRMBoundaryLayerDecorator
 		    Vector &drmLoad,
 		    const Vector &displ,
 		    const Vector &veloc,
-		    const Vector &accel);	     
+		    const Vector &accel,
+            double t); //[20191025 huangjf] time added for debugging	     
   
   
   

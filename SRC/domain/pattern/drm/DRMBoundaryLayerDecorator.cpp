@@ -185,6 +185,7 @@ DRMBoundaryLayerDecorator::computeDRMLoad(Vector &drmLoad,
   e.Zero();
   b.Zero();
   
+  int ELEID = this->myBrick->getTag();
   this->get_E_B_Nodes(e, b);
 
   for (int i=0; i<8; i++) {
@@ -222,7 +223,8 @@ DRMBoundaryLayerDecorator::applyDRMLoad(double cfact,
 					Vector &drmLoad,
 					const Vector &displ,
 					const Vector &veloc,
-					const Vector &accel)
+					const Vector &accel,
+                    double t) //[20191025 huangjf] time added for debugging
 {
   Node *theNode;
   drmLoad.Zero();
@@ -236,5 +238,30 @@ DRMBoundaryLayerDecorator::applyDRMLoad(double cfact,
     load(1) = cfact*drmLoad(i*3+1);
     load(2) = cfact*drmLoad(i*3+2);
     theNode->addUnbalancedLoad(load);
+  }
+
+  //[20191025 huangjf] output nodal displacement, acceleration and DRMForce of element 1001 for debugging
+  if (this->myBrick->getTag() == 1371)
+  {
+      char debugfilename[100];
+      sprintf(debugfilename, "drmDebug.txt");
+      FILE* fptr = fopen(debugfilename, "a+");
+      fprintf(fptr, "\n%f", t);
+      fprintf(fptr, "\n\tDRMDisp:");
+      for (int i = 0; i < displ.Size(); ++i)
+      {
+          fprintf(fptr, "  %.6f", displ(i));
+      }
+      fprintf(fptr, "\n\tDRMAcce:");
+      for (int i = 0; i < accel.Size(); ++i)
+      {
+          fprintf(fptr, "  %.6f", accel(i));
+      }
+      fprintf(fptr, "\n\tDRMForc:");
+      for (int i = 0; i < drmLoad.Size(); ++i)
+      {
+          fprintf(fptr, "  %.6f", drmLoad(i));
+      }
+      fclose(fptr);
   }
 }
