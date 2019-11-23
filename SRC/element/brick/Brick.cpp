@@ -346,6 +346,21 @@ void  Brick::Print(OPS_Stream &s, int flag)
         
         s << "Body Forces: " << b[0] << " " << b[1] << " " << b[2] << endln;
         s << "Resisting Force (no inertia): " << this->getResistingForce();
+
+        //[20191122 jfhuang] calculated and print tributary nodal vertical gravity load
+        // assume the brick element is a cube for calculation of the volume of the element
+        //const Matrix& massMat = getMass();
+        const Vector& nodeCrd1 = nodePointers[0]->getCrds();
+        const Vector& nodeCrd2 = nodePointers[1]->getCrds();
+        const Vector& nodeCrd3 = nodePointers[2]->getCrds();
+        const Vector& nodeCrd4 = nodePointers[3]->getCrds();
+        double length = sqrt(pow(nodeCrd2[0] - nodeCrd1[0], 2) + pow(nodeCrd2[1] - nodeCrd1[1], 2) + pow(nodeCrd2[2] - nodeCrd1[2], 2));
+        double width = sqrt(pow(nodeCrd3[0] - nodeCrd2[0], 2) + pow(nodeCrd3[1] - nodeCrd2[1], 2) + pow(nodeCrd3[2] - nodeCrd2[2], 2));
+        double height = sqrt(pow(nodeCrd4[0] - nodeCrd3[0], 2) + pow(nodeCrd4[1] - nodeCrd3[1], 2) + pow(nodeCrd4[2] - nodeCrd3[2], 2));
+        double rho = materialPointers[0]->getRho();
+        double nodalGravityLoad = length * width * height * rho * 9.806 / 8;
+        s << "Nodal Gravity Load: " << nodalGravityLoad << endln;
+
     }
     
     if (flag == OPS_PRINT_PRINTMODEL_JSON) {
