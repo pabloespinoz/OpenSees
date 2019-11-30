@@ -1260,12 +1260,6 @@ DispBeamColumn3d::Print(OPS_Stream &s, int flag)
 		}
 		//  if (rho != 0)
 		//    opserr << "Mass: \n" << this->getMass();
-
-        //[20191122 jfhuang] print nodal gravity loads
-        //const Matrix& massMat = getMass();
-        double nodalGravityLoad = L * rho * 9.806 / 2;
-        s << "Nodal Gravity Load: " << nodalGravityLoad << endln;
-
 	}
 
 	if (flag == OPS_PRINT_PRINTMODEL_JSON) {
