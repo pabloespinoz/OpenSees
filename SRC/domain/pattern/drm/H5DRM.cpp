@@ -136,6 +136,11 @@ H5DRM::H5DRM()
 
     myrank = 0;
 #ifdef _PARALLEL_PROCESSING
+	//jfhuang output current rank for parallel debug
+	opserr << "************************************************************"<< endln;
+	opserr << "H5DRM::H5DRM() -- _PARALLEL_PROCESSING is defined! " << endln;
+	opserr << "************************************************************"<< endln;
+
     MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
 #endif
     H5DRMout << "H5DRM - empty constructor\n";
@@ -166,6 +171,11 @@ H5DRM::H5DRM(
     step = step1 = step2 = 0;
     myrank = 0;
 #ifdef _PARALLEL_PROCESSING
+	//jfhuang output current rank for parallel debug
+	opserr << "************************************************************"<< endln;
+	opserr << "H5DRM::H5DRM() -- _PARALLEL_PROCESSING is defined! " << endln;
+	opserr << "************************************************************"<< endln;	
+
     MPI_Comm_rank(MPI_COMM_WORLD, &myrank);
 #endif
 
@@ -682,6 +692,12 @@ H5DRM::applyLoad(double time)
         FILE* fptr_accel = 0;
 
         static int step = 0;
+
+	//jfhuang output current rank for parallel debug
+	opserr << "************************************************************"<< endln;
+	opserr << "H5DRM::applyLoad -- myrank = " << myrank << endln;
+	opserr << "************************************************************"<< endln;
+
         //[20191018 huangjf] comment out
         //char mshfilename[100];
 
@@ -1347,7 +1363,7 @@ bool H5DRM::drm_integrate_velocity(double next_integration_time)
 
         }
 
-        //[20191013 huangjf]£ºrelease memory
+        //[20191013 huangjf] release memory
         //for (int i = 0; i < 3; ++i)
         //{
         //    delete [] v[i];
@@ -2012,7 +2028,7 @@ bool read_double_dataset_into_matrix(const hid_t & h5drm_dataset, std::string da
         }
     }
 
-    //[20191013 huangjf]£ºrelease memory
+    //[20191013 huangjf]  release memory
     //for (int i = 0; i < dim[0]; ++i)
     //{
     //    delete[] d[i];
