@@ -57,6 +57,9 @@ BASE  =
 HOME  = /home/jfhuang
 FE    = $(HOME)/OpenSees/SRC
 
+# jfhuang
+AMDdir       = $(HOME)/OpenSees/OTHER/AMD
+CSPARSEdir   = $(HOME)/OpenSees/OTHER/CSPARSE
 
 BLASdir      = $(HOME)/OpenSees/OTHER/BLAS
 CBLASdir     = $(HOME)/OpenSees/OTHER/CBLAS
@@ -117,6 +120,10 @@ endif
 #
 # Note: For libraries that will be created (any in DIRS above)
 # make sure the directory exsists where you want the library to go!
+
+# jfhuang
+AMD_LIBRARY         = $(HOME)/lib/libAMD.a
+CSPARSE_LIBRARY     = $(HOME)/lib/libCSparse.a
 
 FE_LIBRARY          = $(HOME)/lib/libOpenSees.a
 NDARRAY_LIBRARY     = $(HOME)/lib/libndarray.a  # BJ_UCD jeremic@ucdavis.edu 
