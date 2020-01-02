@@ -72,7 +72,9 @@ SUPERLUdir   = $(HOME)/OpenSees/OTHER/SuperLU_5.1.1/SRC
 SUPERLU_DISTdir   = $(HOME)/OpenSees/OTHER/SuperLU_DIST_4.3/SRC
 
 
-DIRS        = $(SUPERLUdir) \
+DIRS        = $(AMDdir) \
+	      $(CSPARSEdir) \
+	      $(SUPERLUdir) \
               $(ARPACKdir) \
               $(BLASdir) \
               $(LAPACKdir) \
@@ -82,7 +84,9 @@ DIRS        = $(SUPERLUdir) \
 
 ifeq ($(PROGRAMMING_MODE), PARALLEL)
 
-DIRS        = $(SUPERLUdir) \
+DIRS        = $(AMDdir) \
+	      $(CSPARSEdir) \
+	      $(SUPERLUdir) \
 	      $(SUPERLU_DISTdir) \
 	      $(ARPACKdir) \
               $(LAPACKdir) \
@@ -94,7 +98,9 @@ endif
 
 ifeq ($(PROGRAMMING_MODE), PARALLEL_INTERPRETERS)
 
-DIRS        = $(SUPERLUdir) \
+DIRS        = $(AMDdir) \
+	      $(CSPARSEdir) \
+	      $(SUPERLUdir) \
 	      $(SUPERLU_DISTdir) \
               $(LAPACKdir) \
               $(ARPACKdir) \
