@@ -267,7 +267,7 @@ HDF5_LIB =
 ifeq ($(HAVE_HDF5), YES)
 
 HDF5_DIR = /usr/local/hdf5
-HDF5_INCLUDE = -I$(HDF5_DIR)/include
+HDF5_INCLUDE = $(HDF5_DIR)/include
 HDF5_LIB = -L$(HDF5_DIR)/lib \
 	 -lhdf5 -lhdf5_hl -lz
 
