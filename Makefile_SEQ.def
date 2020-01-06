@@ -258,10 +258,28 @@ SHELL           = /bin/sh
 # | be linked with when creating executables. These are     |
 # | platform specific and typically order does matter!!     |
 # %---------------------------------------------------------%
+
+# jfhuang, HDF5
+HAVE_HDF5 = YES
+HDF5_INCLUDE =
+HDF5_LIB =
+
+ifeq ($(HAVE_HDF5), YES)
+
+HDF5_DIR = /usr/local/hdf5
+HDF5_INCLUDE = -I$(HDF5_DIR)/include
+HDF5_LIB = -L$(HDF5_DIR)/lib \
+	 -lhdf5 -lhdf5_hl -lz
+
+endif
+
+
+
 MACHINE_LINKLIBS  = -L$(BASE)/lib \
 		-L$(HOME)/lib 
 
 MACHINE_NUMERICAL_LIBS  = -lm \
+		$(HDF5_LIB)
 		$(ARPACK_LIBRARY) \
 		$(SUPERLU_LIBRARY) \
 		$(UMFPACK_LIBRARY) $(CSPARSE_LIBRARY) \
@@ -282,7 +300,9 @@ MACHINE_SPECIFIC_LIBS =
 MACHINE_INCLUDES        = -I/usr/include \
 			  -I$(BASE)/include \
 			  -I/usr/include/cxx \
-			  -I$(HOME)/include -I$(HOME)/blitz
+			  -I$(HOME)/include -I$(HOME)/blitz \
+			  -I$(HDF5_INCLUDE)
+			  
 
 # this file contains all the OpenSees/SRC includes
 include $(FE)/Makefile.incl
