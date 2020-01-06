@@ -266,6 +266,7 @@ HDF5_LIB =
 
 ifeq ($(HAVE_HDF5), YES)
 
+H5DRM_FLAG = -D_H5DRM
 HDF5_DIR = /usr/local/hdf5
 HDF5_INCLUDE = $(HDF5_DIR)/include
 HDF5_LIB = -L$(HDF5_DIR)/lib \
