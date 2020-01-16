@@ -336,6 +336,9 @@
 #include <DriftRecorder.h>
 #include <MPCORecorder.h>
 
+//jfhuang 12/23/2019
+#include <PVDRecorder.h>
+
 // mp_constraint header files
 #include <MP_Constraint.h>
 #include <MP_Joint2D.h>
@@ -473,6 +476,9 @@
 #include <GroundMotion.h>
 #include <InterpolatedGroundMotion.h>
 #include <DRMLoadPatternWrapper.h>
+// jfhuang
+#include <H5DRM.h>
+
 
 #include <Parameter.h>
 #include <ElementParameter.h>
@@ -1579,6 +1585,10 @@ FEM_ObjectBrokerAllClasses::getNewLoadPattern(int classTag)
 
 	case PATTERN_TAG_DRMLoadPattern:
 	     return new DRMLoadPatternWrapper();
+	
+	//jfhuang
+	case PATTERN_TAG_H5DRM:
+	     return new H5DRM();
 
 	default:
 	     opserr << "FEM_ObjectBrokerAllClasses::getPtrLoadPattern - ";
@@ -1781,7 +1791,11 @@ FEM_ObjectBrokerAllClasses::getPtrNewRecorder(int classTag)
 
 		case RECORDER_TAGS_MPCORecorder:
 			return new MPCORecorder();
-	     
+	
+	// by jfhuang 12/23/2019
+	case RECORDER_TAGS_PVDRecorder:  
+	     return new PVDRecorder();
+
 	default:
 	     opserr << "FEM_ObjectBrokerAllClasses::getNewRecordr - ";
 	     opserr << " - no Recorder type exists for class tag ";

@@ -34,6 +34,7 @@ all:
 	@$(CD) $(FE)/api; $(MAKE);
 	@$(CD) $(FE)/reliability; $(MAKE);
 	@$(CD) $(FE)/optimization; $(MAKE);
+	@$(CD) $(FE)/string; $(MAKE);
 	@$(AR) $(ARFLAGS) $(FE_LIBRARY) $(MATRIX_LIBS) 
 	@$(AR) $(ARFLAGS) $(FE_LIBRARY) $(ELE_LIBS) 
 	@$(AR) $(ARFLAGS) $(FE_LIBRARY) $(MATERIAL_LIBS)
@@ -91,6 +92,7 @@ all:
 	@$(CD) $(FE)/api; $(MAKE);
 	@$(CD) $(FE)/damage; $(MAKE);
 	@$(CD) $(FE)/api; $(MAKE);
+	@$(CD) $(FE)/string; $(MAKE);
 	@$(AR) $(ARFLAGS) $(FE_LIBRARY) $(MATRIX_LIBS) 
 	@$(AR) $(ARFLAGS) $(FE_LIBRARY) $(ELE_LIBS) 
 	@$(AR) $(ARFLAGS) $(FE_LIBRARY) $(MATERIAL_LIBS)
@@ -640,12 +642,6 @@ else
 	PLAINCONCRETE = 
 endif
 
-ifdef H5DRM_FLAG
-	H5DRM = $(FE)/domain/pattern/drm/H5DRM.o
-else
-	H5DRM = 
-endif
-
 #	$(FE)/material/nD/Faria1998PlaneStress.o \
 #	$(FE)/material/nD/Faria1998PlaneStress2d.o \
 #	$(FE)/material/nD/Faria1998PlaneStrain.o \
@@ -795,7 +791,7 @@ MATERIAL_LIBS   =  $(FE)/material/Material.o \
 	$(FE)/material/nD/NDMaterial.o \
 	$(FE)/material/nD/PlaneStressLayeredMaterial.o \
 	$(FE)/material/nD/PlaneStressRebarMaterial.o \
-	$(DAMAGE_2P) $(H5DRM) $(FE)/material/nD/WrapperNDMaterial.o \
+	$(DAMAGE_2P) $(FE)/material/nD/WrapperNDMaterial.o \
 	$(FE)/material/nD/UVCplanestress.o \
 	$(FE)/material/nD/UVCmultiaxial.o \
 	$(FE)/material/nD/J2Plasticity.o \
@@ -1083,6 +1079,14 @@ MODEL_BUILDER_LIBS = $(FE)/modelbuilder/ModelBuilder.o \
 	$(FE)/modelbuilder/tcl/Block2D.o \
 	$(FE)/modelbuilder/tcl/Block3D.o
 
+
+
+ifdef H5DRM_FLAG
+	H5DRM = $(FE)/domain/pattern/drm/H5DRM.o
+else
+	H5DRM = 
+endif
+
 DOMAIN_LIBS =  $(FE)/domain/component/DomainComponent.o \
 	$(FE)/domain/component/Parameter.o \
 	$(FE)/domain/component/ElementParameter.o \
@@ -1164,6 +1168,7 @@ DOMAIN_LIBS =  $(FE)/domain/component/DomainComponent.o \
 	$(FE)/domain/pattern/drm/DRMLoadPatternWrapper.o \
 	$(FE)/domain/pattern/drm/DRMInputHandler.o \
 	$(FE)/domain/pattern/drm/PlaneDRMInputHandler.o \
+	$(H5DRM) \
 	$(FE)/domain/groundMotion/GroundMotion.o \
 	$(FE)/domain/groundMotion/GroundMotionRecord.o \
 	$(FE)/domain/groundMotion/InterpolatedGroundMotion.o \
@@ -1352,6 +1357,7 @@ wipe: spotless
 	@$(CD) $(FE)/api; $(MAKE) wipe;
 	@$(CD) $(FE)/interpreter; $(MAKE) wipe;
 	@$(CD) $(FE)/damage; $(MAKE) wipe;
+	@$(CD) $(FE)/string; $(MAKE) wipe;
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 
