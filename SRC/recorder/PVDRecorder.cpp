@@ -549,7 +549,7 @@ PVDRecorder::savePart0(int nodendf)
     }
 
     // node displacement
-    if(nodedata.disp) {
+    /*if(nodedata.disp) {
 	this->indent();
 	theFile<<"<DataArray type="<<quota<<"Float32"<<quota;
 	theFile<<" Name="<<quota<<"Displacement"<<quota;
@@ -567,7 +567,29 @@ PVDRecorder::savePart0(int nodendf)
 		}
 	    }
 	    theFile<<std::endl;
-	}
+	}*/
+    //[20200116 jfhuang] only output 3 translational disp.
+    if (nodedata.disp) {
+        this->indent();
+        theFile << "<DataArray type=" << quota << "Float32" << quota;
+        theFile << " Name=" << quota << "Displacement" << quota;
+        theFile << " NumberOfComponents=" << quota << 3 << quota;
+        theFile << " format=" << quota << "ascii" << quota << ">\n";
+        this->incrLevel();
+        for (int i = 0; i < (int)nodes.size(); i++) {
+            const Vector& vel = nodes[i]->getTrialDisp();
+            this->indent();
+            for (int j = 0; j < 3; j++) {
+                if (j < vel.Size()) {
+                    theFile << vel(j) << ' ';
+                }
+                else {
+                    theFile << 0.0 << ' ';
+                }
+            }
+            theFile << std::endl;
+        }
+
 	this->decrLevel();
 	this->indent();
 	theFile<<"</DataArray>\n";
@@ -978,7 +1000,7 @@ PVDRecorder::savePartParticle(int pno, int bgtag, int nodendf)
     }
 
     // node displacement
-    if(nodedata.disp) {
+    /*if(nodedata.disp) {
 	this->indent();
 	theFile<<"<DataArray type="<<quota<<"Float32"<<quota;
 	theFile<<" Name="<<quota<<"Displacement"<<quota;
@@ -995,6 +1017,26 @@ PVDRecorder::savePartParticle(int pno, int bgtag, int nodendf)
 	this->decrLevel();
 	this->indent();
 	theFile<<"</DataArray>\n";
+    }*/
+    //[20200116 jfhuang] only output 3 translational disp.
+    // node displacement
+    if (nodedata.disp) {
+        this->indent();
+        theFile << "<DataArray type=" << quota << "Float32" << quota;
+        theFile << " Name=" << quota << "Displacement" << quota;
+        theFile << " NumberOfComponents=" << quota << 3 << quota;
+        theFile << " format=" << quota << "ascii" << quota << ">\n";
+        this->incrLevel();
+        for (int i = 0; i < (int)particles.size(); i++) {
+            this->indent();
+            for (int j = 0; j < 3; j++) {
+                theFile << 0.0 << ' ';
+            }
+            theFile << std::endl;
+        }
+        this->decrLevel();
+        this->indent();
+        theFile << "</DataArray>\n";
     }
 
     // node incr displacement
@@ -1420,7 +1462,7 @@ PVDRecorder::savePart(int partno, int ctag, int nodendf)
     }
 
     // node displacement
-    if(nodedata.disp) {
+    /*if(nodedata.disp) {
 	this->indent();
 	theFile<<"<DataArray type="<<quota<<"Float32"<<quota;
 	theFile<<" Name="<<quota<<"Displacement"<<quota;
@@ -1442,6 +1484,32 @@ PVDRecorder::savePart(int partno, int ctag, int nodendf)
 	this->decrLevel();
 	this->indent();
 	theFile<<"</DataArray>\n";
+    }*/
+    //[20200116 jfhuang] only output 3 translational disp.
+    // node displacement
+    if (nodedata.disp) {
+        this->indent();
+        theFile << "<DataArray type=" << quota << "Float32" << quota;
+        theFile << " Name=" << quota << "Displacement" << quota;
+        theFile << " NumberOfComponents=" << quota << 3 << quota;
+        theFile << " format=" << quota << "ascii" << quota << ">\n";
+        this->incrLevel();
+        for (int i = 0; i < ndtags.Size(); i++) {
+            const Vector& vel = nodes[i]->getTrialDisp();
+            this->indent();
+            for (int j = 0; j < 3; j++) {
+                if (j < vel.Size()) {
+                    theFile << vel(j) << ' ';
+                }
+                else {
+                    theFile << 0.0 << ' ';
+                }
+            }
+            theFile << std::endl;
+        }
+        this->decrLevel();
+        this->indent();
+        theFile << "</DataArray>\n";
     }
 
     // node incr displacement
