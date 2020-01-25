@@ -335,6 +335,7 @@
 #include <EnvelopeElementRecorder.h>
 #include <DriftRecorder.h>
 #include <MPCORecorder.h>
+#include <VTK_Recorder.h>
 
 //jfhuang 12/23/2019
 #include <PVDRecorder.h>
@@ -1784,7 +1785,10 @@ FEM_ObjectBrokerAllClasses::getPtrNewRecorder(int classTag)
 	case RECORDER_TAGS_EnvelopeElementRecorder:  
 	     return new EnvelopeElementRecorder();
 
-		 case RECORDER_TAGS_DriftRecorder:  
+	case RECORDER_TAGS_VTK_Recorder:  
+	     return new VTK_Recorder();
+
+        case RECORDER_TAGS_DriftRecorder:  
 	     return new DriftRecorder();
 
         case RECORDER_TAGS_TclFeViewer:  
