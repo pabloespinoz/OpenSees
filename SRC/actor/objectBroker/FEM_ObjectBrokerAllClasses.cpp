@@ -338,8 +338,6 @@
 
 //jfhuang 12/23/2019
 #include <PVDRecorder.h>
-//jfhuang 20200116
-#include <GmshRecorder.h>
 
 // mp_constraint header files
 #include <MP_Constraint.h>
@@ -1797,9 +1795,6 @@ FEM_ObjectBrokerAllClasses::getPtrNewRecorder(int classTag)
 	// by jfhuang 12/23/2019
 	case RECORDER_TAGS_PVDRecorder:  
 	     return new PVDRecorder();
-    //jfhuang 20200116
-    case RECORDER_TAGS_GmshRecorder:
-        return new GmshRecorder();
 
 	default:
 	     opserr << "FEM_ObjectBrokerAllClasses::getNewRecordr - ";
