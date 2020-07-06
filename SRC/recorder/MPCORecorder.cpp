@@ -1,7 +1,5 @@
 /*************************************************************************************
-
 notes, todo-list and workarounds
-
 note 1:
 some beams define a variable number of integration points. this is accounted for by
 this recorder. The only requirement is that the element should provide the
@@ -10,29 +8,23 @@ Now DispBeamColumn(2d or 3d)WithSensitivity do not implement it, furthermore the
 define their class tag in their own cpp file...
 For those elements the variable number of integration points is not supported.
 <update this node>
-
 note 2:
 gauss point / section index in the output from elem->setResponse are 1 based, while
 indices for fibers are 0-based. In the mpco result file we make everything 0-based.
-
 note 3:
 the most expensive part is the writeSection method. However MPCORecored calls this
 function only after a domain change. Some optimizations can be done....
-
 note 4:
 see $MP(2017/04/20)
-
 $WO:SHELL_SEC_KEYWORD
 workaround for shells, they used the "material" keyword for their section!
 it would be better to use "section" as in beams, but we cannot modify those files...
 \todo check the implementation of shell elements, if in future versions those elements
 will be fixed and will handle the section keyword, remove this workaround
-
 note 5:
 NDMaterial in setResponse gives unknownStress for stress components if type == PlabeFiber!
 todo: add auto-component naming in case of duplicated components!
 in STKO components are assumed all different!
-
 **************************************************************************************/
 
 // some definitions
@@ -45,7 +37,7 @@ Then we need to set the HDF5 include directory.
 And finally for the linker: hdf5 or libhdf5
 and path to HDF5 lib dir
 */
-#define MPCO_HDF5_LOADED_AT_RUNTIME 
+// #define MPCO_HDF5_LOADED_AT_RUNTIME 
 
 /* if hdf5 is loaded at runtime, this macro makes the process of loading hdf5 verbose */
 #define MPCO_LIBLOADER_VERBOSE
@@ -119,9 +111,7 @@ while opensees is writing data. Warning: this is a new feature in hdf5 version 1
 #include <stdint.h>
 
 /*************************************************************************************
-
 macros
-
 **************************************************************************************/
 
 #ifndef M_PI
@@ -3390,16 +3380,13 @@ namespace mpco {
 		typedef std::vector<ResultRecorder> ResultRecorderCollection;
 
 		/*************************************************************************************
-
 		utilities for element mapping based on:
 		class tag
 		integration rule
 		default or custom integration rule
 		<element group>
-
 		In this way all elements in <element group> share the same:
 		1) number of nodes, 2) number and location of integration points
-
 		**************************************************************************************/
 
 		struct ElementIntegrationRule
@@ -3684,7 +3671,8 @@ namespace mpco {
 					elem_class_tag == ELE_TAG_ForceBeamColumn2d || /* <- OK! this one defines everything ! good job*/
 					elem_class_tag == ELE_TAG_ForceBeamColumn3d || /* <- OK! this one defines everything ! good job*/
 					elem_class_tag == ELE_TAG_ForceBeamColumnCBDI2d || /* <- OK! this one defines everything ! good job*/
-					elem_class_tag == ELE_TAG_ForceBeamColumnWarping2d /* <- OK! this one defines everything ! good job*/
+					elem_class_tag == ELE_TAG_ForceBeamColumnWarping2d || /* <- OK! this one defines everything ! good job*/
+					elem_class_tag == ELE_TAG_AxEqDispBeamColumn2d
 					) {
 					geom_type = ElementGeometryType::Line_2N;
 					int_type = ElementIntegrationRuleType::CustomIntegrationRule;
@@ -3998,10 +3986,8 @@ namespace mpco {
 }
 
 /*************************************************************************************
-
 private_data class.
 private storage class for MPCORecorder
-
 **************************************************************************************/
 
 class MPCORecorder::private_data
@@ -4074,9 +4060,7 @@ public:
 };
 
 /*************************************************************************************
-
 MPCORecorder class implementation
-
 **************************************************************************************/
 
 MPCORecorder::MPCORecorder()
@@ -6268,9 +6252,7 @@ int MPCORecorder::recordResultsOnElements()
 }
 
 /*************************************************************************************
-
 MPCORecorder generator
-
 **************************************************************************************/
 
 /* static class instance counter */
@@ -6512,4 +6494,3 @@ void* OPS_MPCORecorder()
 		new_recorder->m_data->elem_set.push_back(*it);
 	return new_recorder;
 }
-
