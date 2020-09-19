@@ -88,7 +88,7 @@ RELIABILITY = NO_RELIABILITY
 # remove the directory from DIRS.
 
 BASE		= /usr/local
-HOME		= /home/jfhuang
+HOME		= /home/pablo
 FE		= $(HOME)/OpenSees/SRC
 
 AMDdir       = $(HOME)/OpenSees/OTHER/AMD
@@ -259,7 +259,7 @@ SHELL           = /bin/sh
 # | platform specific and typically order does matter!!     |
 # %---------------------------------------------------------%
 
-# jfhuang, HDF5
+# pablo, HDF5
 HAVE_HDF5 = YES
 HDF5_INCLUDE =
 HDF5_LIB =
