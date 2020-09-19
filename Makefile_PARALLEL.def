@@ -54,10 +54,10 @@ RELIABILITY = NO_RELIABILITY
 
 BASE  = 
 #  PUT YOUR HOME DIRECTOREY HERE
-HOME  = /home/jfhuang
+HOME  = /home/pablo
 FE    = $(HOME)/OpenSees/SRC
 
-# jfhuang
+# pablo
 AMDdir       = $(HOME)/OpenSees/OTHER/AMD
 CSPARSEdir   = $(HOME)/OpenSees/OTHER/CSPARSE
 
@@ -127,7 +127,7 @@ endif
 # Note: For libraries that will be created (any in DIRS above)
 # make sure the directory exsists where you want the library to go!
 
-# jfhuang
+# pablo
 AMD_LIBRARY         = $(HOME)/lib/libAMD.a
 CSPARSE_LIBRARY     = $(HOME)/lib/libCSparse.a
 
@@ -225,7 +225,7 @@ OPT_FLAG = -O3
 MUMPS_FLAG = 
 PETSC_FLAG =
 
-# jfhuang, H5DRM_FLAG
+# pablo, H5DRM_FLAG
 H5DRM_FLAG = -D_H5DRM
 
 COMP_FLAG = 
@@ -311,7 +311,7 @@ PETSC_LIB =
 ifeq ($(HAVEPETSC), YES)
 
 #PETSC_DIR = /usr/local/apps/petsc-2.2.1-64
-PETSC_DIR = /home/jfhuang/Downloads/petsc-2.2.1
+PETSC_DIR = /home/pablo/Downloads/petsc-2.2.1
 PETSC_ARCH = arch-linux2-c-debug
 BOPT = O
 
@@ -334,7 +334,7 @@ MUMPS_LIB =
 
 ifeq ($(HAVEMUMPS), YES)
 
-MUMPS_DIR = /home/jfhuang/Downloads/MUMPS_5.1.2
+MUMPS_DIR = /home/pablo/Downloads/MUMPS_5.1.2
 MUMPS = YES
 MUMPS_FLAG = -D_MUMPS
 MUMPS_LIB = -L$(MUMPS_DIR)/lib \
@@ -353,7 +353,7 @@ MUMPS_INCLUDE = -I$(MUMPS_DIR)/include
 endif
 
 
-# jfhuang, HDF5
+# pablo, HDF5
 HAVE_HDF5 = YES
 HDF5_INCLUDE =
 HDF5_LIB =
